@@ -4,7 +4,7 @@
   "engines": {
     "node": ">=7.6"
   },
-  "description": "JSON Interface for the National Rail Enquiries Darwin OpenLDBWS and OpenLBSVWS SOAP service. Requires a valid token to access services.",
+  "description": "JSON Interface for the National Rail Enquiries Darwin OpenLDBWS and OpenLDSVWS SOAP services. To access either servce will require a valid token.",
   "author": {
     "name": "SpiralArm Consulting ltd & Artonezero ltd",
     "email": "srogers.uk@gmail.com"
