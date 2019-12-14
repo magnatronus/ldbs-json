@@ -29,6 +29,8 @@ class LiveDepartureBoardService {
    */
   constructor(accessToken = "0000-0000-0000-0000", staffVersion = false) {
     this.staffVersion = staffVersion;
+    this.refUrl = "https://lite.realtime.nationalrail.co.uk/OpenLDBSVWS/ldbsvref.asmx";
+    this.refTargetNamespace = "http://thalesgroup.com/RTTI/2015-05-14/ldbsv_ref/";
     this.baseURL = (staffVersion) ? "https://lite.realtime.nationalrail.co.uk/OpenLDBSVWS/ldbsv12.asmx": "https://lite.realtime.nationalrail.co.uk/OpenLDBWS/ldb11.asmx";
     this.targetNamespace = (staffVersion) ? "http://thalesgroup.com/RTTI/2017-10-01/ldbsv/" : "http://thalesgroup.com/RTTI/2017-10-01/ldb/";
     this.accessToken = accessToken;
@@ -38,12 +40,13 @@ class LiveDepartureBoardService {
    * Query the LiveDepartureBoardService for the requested data
    * @param {String} method - the LDBWS or LDBSVWS to perform 
    * @param {Object} options  - a JSON object consisting of the key/value pairs for the requested method
+   * @param {Bool} userRef - only applies for the staff version of the API and allows access to those calls that use the reference data endpoint
    */
-  async call(method, options) {
-    const soapCall = new DepartureBoardSoap(this.accessToken, this.targetNamespace, method, options).generateCall();
+  async call(method, options, useRef = false) {
+    const soapCall = new DepartureBoardSoap(this.accessToken, (useRef) ? this.refTargetNamespace : this.targetNamespace, method, options).generateCall();
     const body = await request({
         method: 'POST',
-        url: this.baseURL,
+        url: (useRef) ? this.refUrl: this.baseURL,
         headers: {
             'content-type' : "text/xml"
         },

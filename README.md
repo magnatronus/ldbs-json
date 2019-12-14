@@ -32,10 +32,10 @@ api.call("GetDepBoardWithDetails", options).then(board => {
 
 ```
 
-There are 2 examples ( one STAFF version and one USER version that can be found in the included *examples* directory of the project).
+There are 3 examples ( two STAFF versions and one USER version that can be found in the included *examples* directory of the project). The additional staff version is to access the Reference Data Enpoint calls (this example uses **GetStationList**).
 
 This module is a continuation from my other module https://www.npmjs.com/package/ldbws-json which was only for use with the USER version of the OpenLDBWS web service.
 
 
 # Acknowledgements
-- The LDBS_JSON is powered by National Rail Enquiries.
+- The LDBS-JSON module is powered by National Rail Enquiries.

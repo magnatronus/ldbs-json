@@ -1,6 +1,6 @@
 {
-  "name": "ldbsvws-json",
-  "version": "1.0.0",
+  "name": "ldbs-json",
+  "version": "1.1.0",
   "engines": {
     "node": ">=7.6"
   },
@@ -16,15 +16,14 @@
     "url": "https://github.com/magnatronus/ldbs-json"
   },
   "main": "index.js",
-  "scripts": {
-  },
+  "scripts": {},
   "keywords": [
     "ldbws",
     "ldbs",
     "openldbws",
     "openldbsvws",
     "darwin",
-    "json"    
+    "json"
   ],
   "dependencies": {
     "request": "^2.88.0",
