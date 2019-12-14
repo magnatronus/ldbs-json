@@ -40,9 +40,10 @@ class LiveDepartureBoardService {
    * Query the LiveDepartureBoardService for the requested data
    * @param {String} method - the LDBWS or LDBSVWS to perform 
    * @param {Object} options  - a JSON object consisting of the key/value pairs for the requested method
-   * @param {Bool} userRef - only applies for the staff version of the API and allows access to those calls that use the reference data endpoint
+   * @param {Bool} useRef - only applies for the staff version of the API and allows access to those calls that use the reference data endpoint - default is false
+   * @param {Bool} withAttributes - don't filter the attributes out from the result - default is false
    */
-  async call(method, options, useRef = false) {
+  async call(method, options, useRef = false, withAttributes = false, ) {
     const soapCall = new DepartureBoardSoap(this.accessToken, (useRef) ? this.refTargetNamespace : this.targetNamespace, method, options).generateCall();
     const body = await request({
         method: 'POST',
@@ -52,6 +53,9 @@ class LiveDepartureBoardService {
         },
         body: soapCall
     });
+    if(withAttributes) {
+      return await this._parseResultWithAttributes(body, method);      
+    }
     return await this._parseResult(body, method);
   }
 
@@ -62,6 +66,26 @@ class LiveDepartureBoardService {
         tagNameProcessors: [stripNS],
         explicitArray : false,
         ignoreAttrs : true
+      }, function(err, result){
+        if(!err){
+          const data = result.Envelope.Body[`${method}Response`];
+          resolve(data);
+        } else {
+          reject(err);
+        }
+      });        
+    });
+  }
+
+  // Private method to parse result to JSON and return all data including attributes
+  // this version will return the the content text as "_"  and all associated attribute in "$"
+  // for more information see https://www.npmjs.com/package/xml2js
+  _parseResultWithAttributes(body, method) {
+    return new Promise((resolve, reject) => {
+      parseString(body, {
+        tagNameProcessors: [stripNS],
+        explicitArray : false,
+        ignoreAttrs : false
       }, function(err, result){
         if(!err){
           const data = result.Envelope.Body[`${method}Response`];

@@ -36,6 +36,17 @@ There are 3 examples ( two STAFF versions and one USER version that can be found
 
 This module is a continuation from my other module https://www.npmjs.com/package/ldbws-json which was only for use with the USER version of the OpenLDBWS web service.
 
+## New Options for the api.call() method (Dec 2019)
+The API will still work as it did but there are 2 new (optional) flags that can be past in when making an API call. The call now :
+
+- api.call(*method*, *options*, *useRef*, *withAttributes*)
+
+The parameters **method** and **options** are the same as they were but there are 2 new options **useRef** and **withAttributes** (both default to false so have no impact if not specified).
+
+ - **useRef** can be set to true so that a Staff API call can access the Reference Data Endpoint
+ - **withAttributes** can be set to true to stop the attributes  being stripped from the result. **NB: setting this to true will change the JSON data structure returned**.
+
+
 
 # Acknowledgements
 - The LDBS-JSON module is powered by National Rail Enquiries.
