@@ -38,7 +38,7 @@ class DepartureBoardSoap {
           let val="";
           if(key == "filterList"){
               options[key].forEach((crs) => {
-                  val += `<crs>${crs}</crs>`;
+                  val += `<ldb:crs>${crs}</ldb:crs>`;
               });
           } else {
               val = `${options[key]}`                
