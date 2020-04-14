@@ -1,5 +1,8 @@
 # ldbs-json changelog
 
+## 1.1.2 (Apr 2020)
+Add missing namespace attribute for filterList (PR from SimonRice)
+
 ## 1.1.1 (Dec 2019)
 By default attributes are removed from the returned data Now they can be included.
 
