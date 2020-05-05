@@ -36,6 +36,10 @@ There are 3 examples ( two STAFF versions and one USER version that can be found
 
 This module is a continuation from my other module https://www.npmjs.com/package/ldbws-json which was only for use with the USER version of the OpenLDBWS web service.
 
+
+## Updates May 2020
+This update has replaced the user of the **request** module and it now uses **node-fetch**. Some simple error checks on the return status of the API are now made and the examples have also been updated.
+
 ## New Options for the api.call() method (Dec 2019)
 The API will still work as it did but there are 2 new (optional) flags that can be past in when making an API call. The call now :
 

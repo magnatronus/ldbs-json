@@ -3,11 +3,10 @@
  * index.js
  * Package main entry point
  */
-
-const request             = require('request-promise-native'),
-      parseString         = require('xml2js').parseString,
-      stripNS             = require('xml2js').processors.stripPrefix,
-      DepartureBoardSoap  = require('./soap');
+const fetch = require('node-fetch');
+const parseString = require('xml2js').parseString;
+const stripNS = require('xml2js').processors.stripPrefix;
+const DepartureBoardSoap = require('./soap');
 
 
 
@@ -44,19 +43,29 @@ class LiveDepartureBoardService {
    * @param {Bool} withAttributes - don't filter the attributes out from the result - default is false
    */
   async call(method, options, useRef = false, withAttributes = false, ) {
-    const soapCall = new DepartureBoardSoap(this.accessToken, (useRef) ? this.refTargetNamespace : this.targetNamespace, method, options).generateCall();
-    const body = await request({
-        method: 'POST',
-        url: (useRef) ? this.refUrl: this.baseURL,
-        headers: {
-            'content-type' : "text/xml"
-        },
-        body: soapCall
-    });
-    if(withAttributes) {
-      return await this._parseResultWithAttributes(body, method);      
+
+    try{
+      const soapCall = new DepartureBoardSoap(this.accessToken, (useRef) ? this.refTargetNamespace : this.targetNamespace, method, options).generateCall();
+      const response = await fetch((useRef) ? this.refUrl: this.baseURL, {
+        method: 'post',
+        body: soapCall,
+        headers: {'content-type' : "text/xml"}
+      });
+      const body = await  response.text();
+      if(response.status !== 200){
+        throw Error(`API Error ${response.status}: ${response.statusText}`)
+      }
+
+      if(withAttributes) {
+        return await this._parseResultWithAttributes(body, method);      
+      }
+      return await this._parseResult(body, method);
+    
+    } catch(error) {
+      console.error(error);
+      return false;
     }
-    return await this._parseResult(body, method);
+
   }
 
   // Private method to parse result to JSON
