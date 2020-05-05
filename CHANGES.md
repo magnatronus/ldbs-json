@@ -1,5 +1,8 @@
 # ldbs-json changelog
 
+## 1.2.0 (May 2020)
+Replaced request with node-fetch and added some basic error trapping. Examples updated
+
 ## 1.1.2 (Apr 2020)
 Add missing namespace attribute for filterList (PR from SimonRice)
 
