@@ -36,7 +36,7 @@ class DepartureBoardSoap {
     let body = ``;
     Object.keys(options).forEach(function(key){
       let val="";
-      if(key == "filterList"){
+      if(key == "filterList"  || key == "CRSList"){
         options[key].forEach((crs) => {
           val += `<ldb:crs>${crs}</ldb:crs>`;
         });

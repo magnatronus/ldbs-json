@@ -1,5 +1,8 @@
 # ldbs-json changelog
 
+## 1.2.1 (May 2020)
+Minor updated - added CRSList to filterList processing to handle getting disruptionLists
+
 ## 1.2.0 (May 2020)
 Replaced request with node-fetch and added some basic error trapping. Examples updated
 
